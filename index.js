@@ -113,8 +113,13 @@ function flappyBird() {
         birdY + birdHeight >= pipes[0].bottomPipe.y
       ) {
         isRunning = false;
+        restart_button.style.display = "block";
       }
     }
+  }
+
+  function restart() {
+    location.reload();
   }
 
   function runGame() {
@@ -129,4 +134,7 @@ function flappyBird() {
 
   setInterval(runGame, 1000 / 60);
   setInterval(spawnPipes, pipeSpawnInterval);
+
+  const restart_button = document.getElementById("restart");
+  restart_button.addEventListener("click", restart);
 }

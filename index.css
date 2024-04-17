@@ -19,3 +19,9 @@ body * {
 #canvas {
   background-color: lightblue;
 }
+
+#restart {
+  position: absolute;
+  padding: 5px;
+  display: none;
+}
