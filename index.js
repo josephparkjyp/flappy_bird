@@ -5,20 +5,20 @@ function flappyBird() {
   const ctx = canvas.getContext("2d");
 
   // Bird Variables:
-  let birdX = 50;
+  let birdX = 25;
   let birdY = canvas.height / 2;
-  let birdWidth = 50;
-  let birdHeight = 50;
+  let birdWidth = 25;
+  let birdHeight = 25;
   let birdVelocity = 0;
-  let flapStrength = 10;
-  let gravity = 0.5;
+  let flapStrength = 5;
+  let gravity = 0.25;
 
   // Pipe Variables:
   let pipes = [];
-  let pipeWidth = 150;
+  let pipeWidth = 75;
   let pipePair = {};
-  let pipeDistance = 200;
-  let pipeVelocity = 5;
+  let pipeDistance = 100;
+  let pipeVelocity = 2.5;
   let pipeSpawnInterval = 1500;
 
   // Game Variables:
@@ -39,7 +39,7 @@ function flappyBird() {
 
   // Pipe Functions
   function spawnPipes() {
-    let height = Math.floor(Math.random() * 600);
+    let height = Math.floor(Math.random() * 300);
     pipePair = {
       topPipe: {
         x: canvas.width,
@@ -93,8 +93,8 @@ function flappyBird() {
 
   function updateScore() {
     ctx.fillStyle = "black";
-    ctx.font = "50px Arial";
-    ctx.fillText(score, 30, 70);
+    ctx.font = "25px Arial";
+    ctx.fillText(score, 15, 35);
   }
 
   function hasCollided() {
