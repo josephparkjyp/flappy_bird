@@ -39,7 +39,7 @@ function flappyBird() {
 
   // Pipe Functions
   function spawnPipes() {
-    let height = Math.floor(Math.random() * 300);
+    let height = Math.floor(Math.random() * 250);
     pipePair = {
       topPipe: {
         x: canvas.width,
