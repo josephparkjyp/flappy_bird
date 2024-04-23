@@ -6,10 +6,13 @@ const pipeBot = new Image();
 pipeBot.src = "pipeBot.png";
 const background = new Image();
 background.src = "background.jpg";
+const play_button = document.getElementById("play");
+play_button.addEventListener("click", play);
 
-background.onload = function () {
+function play() {
+  play_button.style.display = "none";
   flappyBird();
-};
+}
 
 function flappyBird() {
   const canvas = document.getElementById("canvas");
@@ -34,6 +37,7 @@ function flappyBird() {
 
   // Game Variables:
   let score = 0;
+  let highScore = 0;
   let isRunning = true;
 
   // Bird Functions
@@ -108,9 +112,13 @@ function flappyBird() {
   // Game Functions
 
   function updateScore() {
+    if (score >= highScore) {
+      highScore = score;
+    }
     ctx.fillStyle = "black";
-    ctx.font = "25px Arial";
-    ctx.fillText(score, 15, 35);
+    ctx.font = "15px Arial";
+    ctx.fillText(`Score: ${score}`, 15, 35);
+    ctx.fillText(`High Score: ${highScore}`, 115, 35);
   }
 
   function hasCollided() {
@@ -135,7 +143,27 @@ function flappyBird() {
   }
 
   function restart() {
-    location.reload();
+    restart_button.style.display = "none";
+
+    birdX = 25;
+    birdY = canvas.height / 2;
+    birdWidth = 25;
+    birdHeight = 25;
+    birdVelocity = 0;
+    flapStrength = 5;
+    gravity = 0.25;
+
+    // Pipe Variables:
+    pipes = [];
+    pipeWidth = 75;
+    pipePair = {};
+    pipeDistance = 100;
+    pipeVelocity = 2.5;
+    pipeSpawnInterval = 1500;
+
+    // Game Variables:
+    score = 0;
+    isRunning = true;
   }
 
   function runGame() {
