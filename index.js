@@ -1,4 +1,15 @@
-flappyBird();
+const bird = new Image();
+bird.src = "bird.png";
+const pipeTop = new Image();
+pipeTop.src = "pipeTop.png";
+const pipeBot = new Image();
+pipeBot.src = "pipeBot.png";
+const background = new Image();
+background.src = "background.jpg";
+
+background.onload = function () {
+  flappyBird();
+};
 
 function flappyBird() {
   const canvas = document.getElementById("canvas");
@@ -33,8 +44,11 @@ function flappyBird() {
     birdVelocity += gravity;
     birdY += birdVelocity;
 
-    ctx.fillStyle = "yellow";
-    ctx.fillRect(birdX, birdY, birdWidth, birdHeight);
+    ctx.save(); // Save the current canvas state
+    ctx.translate(birdX + birdWidth / 2, birdY + birdHeight / 2); // Translate to the center of the bird
+    ctx.rotate((birdVelocity * Math.PI) / 90); // Rotate by 65 degrees (converted to radians)
+    ctx.drawImage(bird, -birdWidth / 2, -birdHeight / 2, birdWidth, birdHeight); // Draw the bird centered at (0,0)
+    ctx.restore();
   }
 
   // Pipe Functions
@@ -43,15 +57,15 @@ function flappyBird() {
     pipePair = {
       topPipe: {
         x: canvas.width,
-        y: 0,
+        y: -height,
         width: pipeWidth,
-        height: height,
+        height: 300,
       },
       bottomPipe: {
         x: canvas.width,
-        y: height + pipeDistance,
+        y: -height + 300 + pipeDistance,
         width: pipeWidth,
-        height: canvas.height - height - pipeDistance,
+        height: 300,
       },
     };
     pipes.push(pipePair);
@@ -70,13 +84,15 @@ function flappyBird() {
       }
 
       ctx.fillStyle = "green";
-      ctx.fillRect(
+      ctx.drawImage(
+        pipeTop,
         pipePair.topPipe.x,
         pipePair.topPipe.y,
         pipePair.topPipe.width,
         pipePair.topPipe.height
       );
-      ctx.fillRect(
+      ctx.drawImage(
+        pipeBot,
         pipePair.bottomPipe.x,
         pipePair.bottomPipe.y,
         pipePair.bottomPipe.width,
@@ -109,7 +125,7 @@ function flappyBird() {
         birdX + birdWidth >= pipes[0].topPipe.x + pipes[0].topPipe.width)
     ) {
       if (
-        birdY <= pipes[0].topPipe.height ||
+        birdY <= pipes[0].topPipe.y + 300 ||
         birdY + birdHeight >= pipes[0].bottomPipe.y
       ) {
         isRunning = false;
@@ -125,6 +141,7 @@ function flappyBird() {
   function runGame() {
     if (isRunning) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
       updateBird();
       updatePipes();
       updateScore();
